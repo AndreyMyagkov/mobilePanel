@@ -1,9 +1,7 @@
 # Библиотека для создания панели навигации в мобильной версии сайта
 
-[**sortItems**](https://github.com/AndreyMyagkov/Aloha-html/tree/master/sort-bar)
 
-![demo](https://github.com/AndreyMyagkov/mobilePanel/raw/master/demo.png "demo")
-
+![demo](https://raw.githubusercontent.com/AndreyMyagkov/mobilePanel/master/demo.gif "demo")
 
 
 
@@ -15,12 +13,12 @@
 
 ## Начало работы
 
-# 1. Подключите скрипт и стили
+### 1. Подключите скрипт и стили
 ```HTML
     <link href="mpanel/mpanel.css" rel="stylesheet" media="all">
     <script src="mpanel/mpanel.min.js"></script>
 ```
-# 2. Активация панели с гамбургером:
+### 2. Активация панели с гамбургером:
 
 ```javascript
 $.mobilePanel({'navbar':'.menu'});
@@ -32,7 +30,7 @@ $.mobilePanel({'navbar':'.menu'});
 
  ```navbar``` - класс или id основного меню на сайте
 
-# 3. Добавляем кнопку открытия дополнительного меню
+### 3. Добавляем кнопку открытия дополнительного меню
 
 Все последующие кнопки располагаются справа.
 
@@ -45,7 +43,7 @@ $.mobilePanel('button', {'text':'Каталог', 'navbar': '.aside-menu'});
  ```text``` - текст кнопки  (можно использовать HTML)
   ```navbar``` - класс или id дополнительного меню на сайте
 
-# 4. Добавляем кастомную кнопку
+### 4. Добавляем кастомную кнопку
 
 ```javascript
 $.mobilePanel('button', {'text':'<a href=""><i class="fa fa-user-o" aria-hidden="true"></i> Войти</a>', 'center': true});
@@ -56,7 +54,7 @@ $.mobilePanel('button', {'text':'<a href=""><i class="fa fa-user-o" aria-hidden=
  ```center``` - разместить кнопку по центру
 
 
-# 5. Вывести уведомление на кнопке
+### 5. Вывести уведомление на кнопке
 
 ```javascript
 basket=$.mobilePanel('button', {'text':'Корзина'});
