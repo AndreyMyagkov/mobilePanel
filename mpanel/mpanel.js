@@ -1,4 +1,4 @@
-	(function($){
+	;(function($){
     var methods = {
     	buttons:0,
         init : function(options) { 
