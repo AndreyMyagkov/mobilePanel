@@ -88,13 +88,13 @@
 
 .mp__notification{
 	position: absolute;
-    top: -5px;
-    right: -11px;
-    background-color: #dd0000;
-    color: #fff;
-    padding: 1px 3px;
-    border-radius: 10px;
-    min-width: 12px;
+	top: -5px;
+	right: -11px;
+	background-color: #dd0000;
+	color: #fff;
+	padding: 1px 3px;
+	border-radius: 10px;
+	min-width: 12px;
 }
 
 
@@ -106,9 +106,9 @@
 	.mp__overlay.mp--on {
 		display: block;
 	}
-	.mp__panel {display: block;} 
+	.mp__panel {display: block;}
 
-	body{
+	body.mp--init{
 		padding-top: 40px;
 	}
 
@@ -121,27 +121,24 @@
 		width: 80%;
 		max-width: 260px;
 		overflow-y: auto;
-		background: #fff;
-		-webkit-box-shadow: 0px 0 3px 0px rgba(0,0,0,0.8);
-		        box-shadow: 0px 0 3px 0px rgba(0,0,0,0.8);
-		-webkit-transition:all 0.3s linear;
+		-webkit-box-shadow: 0 0 3px 0 rgba(0,0,0,0.8);
 		-webkit-transition: left,right 0.3s linear;
-
+		box-shadow: 0 0 3px 0 rgba(0,0,0,0.8);
 		z-index: 102;
 		-webkit-box-sizing: border-box;
-		        box-sizing: border-box;
+		box-sizing: border-box;
 		background-color: #666;
 		margin:0;
-		padding: 45px 20px 20px 20px !important;;
+		padding: 45px 20px 20px 20px !important;
 		height: auto!important;
 	}
 
 	.mp__nav-panel_main{
-		left:-125%;
+		left:-100%;
 		transition: left 0.3s linear;
 	}
 
-	
+
 	.mp__nav-panel_second{
 		right:-125%;
 		transition: right 0.3s linear;
@@ -151,7 +148,7 @@
 		left:0;
 	}
 
-	
+
 	.mp__nav-panel_second.mp--on{
 		right:0;
 	}

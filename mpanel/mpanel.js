@@ -1,93 +1,127 @@
-	;(function($){
-    var methods = {
-    	buttons:0,
-        init : function(options) { 
+/**
+ * MobilePanel.js
+ * Version  : 2.0.0
+ * License  : MIT
+ * Copyright: 2020 Andrey Myagkov andreymyagkov@gmail.com
+ * https://github.com/AndreyMyagkov/mobilePanel
+ */
+class MobilePanel {
+    options = {};
+    buttonsCounter = 0;
 
-            var mpTemplate='<div class="mp__panel"><div class="mp__wr"><button class="mp__button mp__button-main"><span class="mp__line"></span></button></div></div><div class="mp__overlay"></div>';
-            $('body').append(mpTemplate);
+    $navbar = null;
+    $overlay = null;
+    $mainButton = null;
 
-            if(options.navbar){
-                $(options.navbar).addClass('mp__nav-panel mp__nav-panel_main');
-            	$('.mp__button-main').on('click', function(){
-                   // $('.mp__nav-panel').not('.mp__nav-panel_main').removeClass('mp--on');
-                  //  $('.mp__panel .mp__button').not(this).removeClass('mp--on');
-            		$(this).toggleClass('mp--on');
-            		$(options.navbar).toggleClass('mp--on');
-            		$(".mp__overlay").toggleClass('mp--on');
-            		return false;
-            	});
+    mpTemplate = '<div class="mp__panel"><div class="mp__wr"><button class="mp__button mp__button-main"><span class="mp__line"></span></button></div></div><div class="mp__overlay"></div>';
 
 
+    constructor(options = {}) {
+        this.options = Object.assign({}, options);
+        try {
+            if (!this.options.navbar) {
+                new Error('Navbar selector not defined');
+            }
+            this.$navbar = document.querySelector(this.options.navbar);
+
+            if (this.$navbar == null) {
+                throw new Error('Navbar not found');
+            } else {
+
+                document.body.classList.add('mp--init');
+                document.body.insertAdjacentHTML('beforeend', this.mpTemplate);
+
+                this.$overlay = document.querySelector('.mp__overlay');
+                this.$mainButton = document.querySelector('.mp__button-main');
+
+                this.$navbar.classList.add('mp__nav-panel');
+                this.$navbar.classList.add('mp__nav-panel_main');
+
+
+                this.$mainButton.addEventListener('click', e => {
+                    e.target.classList.toggle('mp--on');
+                    this.$navbar.classList.toggle('mp--on');
+                    this.$overlay.classList.toggle('mp--on');
+                }, true);
+
+
+                this.$overlay.addEventListener('click', e => {
+                    e.target.classList.remove('mp--on');
+                    // ? цикл?
+                    document.querySelector('.mp__button').classList.remove('mp--on');
+                    this.$navbar.classList.remove('mp--on');
+                }, true);
             }
 
-            $(".mp__overlay").click( function() {
-		      $(this).removeClass('mp--on');
-		      $('.mp__button').removeClass('mp--on');
-		      $(options.navbar).removeClass('mp--on');
-		      return false;
-		    });
-        },
-        show : function( ) {
-        	$('.mp__panel').show();
-        },
-        hide : function( ) {
-        	$('.mp__panel').hide();
-        },
-        button : function(options) {
-
-            methods.buttons++;
-
-
-            var $button=$('<button class="mp__button mp__button-text '+
-            'mp__button-'+methods.buttons+
-            (options.center?' mp__button-text--center':'')+
-            '">'+options.text+'</button>');
-
-            $('.mp__wr').append($button);	
-/*
-            $('.mp__wr').append('<button class="mp__button mp__button-text '+
-            	'mp__button-'+methods.buttons+
-            	(options.center?' mp__button-text--center':'')+
-            	'">'+options.text+'</button>');
-*/
-
-            if(options.navbar){
-                $(options.navbar).addClass('mp__nav-panel mp__nav-panel_second mp__nav-panel_second-'+methods.buttons);
-            	$('.mp__button-'+methods.buttons).on('click', function(){
-                  //  $('.mp__nav-panel, .mp__panel .mp__button').removeClass('mp--on');
-            		$(this).toggleClass('mp--on');
-            		$(options.navbar).toggleClass('mp--on');
-            		$(".mp__overlay").toggleClass('mp--on');
-            		return false;
-            	});
-
-
+        } catch (e) {
+            if (e.name === 'Error') {
+                console.error(e);
             }
+        }
 
-            $(".mp__overlay").click( function() {
-		      $(options.navbar).removeClass('mp--on');
-		      return false;
-            });
-            
-            return $button;
-        },
+    }
 
-        notification:function(options){
-			if($('.mp__notification', options.button).length){
-				$('.mp__notification', options.button).html(options.value);
-			} else {
-				options.button.append('<div class="mp__notification">'+options.value+'</div>');
-			}
-		}
-    };
+    /**
+     * Показывает панель
+     */
+    show() {
+        document.querySelector('.mp__panel').style.display = 'block';
+        document.body.classList.add('mp--init');
+    }
 
-    $.mobilePanel = function(method) {
-        if (methods[method]) {
-            return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
-        } else if (typeof method === 'object' || ! method) {
-            return methods.init.apply(this, arguments);
+    /**
+     * Скрывает панель
+     */
+    hide() {
+        document.querySelector('.mp__panel').style.display = 'none';
+        document.body.classList.remove('mp--init');
+    }
+
+    /**
+     * Create button
+     * @param options - button options
+     * @return {HTMLElement}
+     */
+    button(options) {
+        this.buttonsCounter++;
+        const button= `<button id="mp_button_${this.buttonsCounter}" class="mp__button mp__button-text mp__button-${this.buttonsCounter} 
+            ${(options.center?' mp__button-text--center':'')}">${options.text}</button>`;
+
+        document.querySelector('.mp__wr').insertAdjacentHTML( 'afterbegin', button );
+
+
+        if(options.navbar && document.querySelector(options.navbar)){
+            const $navBarSecond = document.querySelector(options.navbar);
+
+            $navBarSecond.classList.add('mp__nav-panel');
+            $navBarSecond.classList.add('mp__nav-panel_second');
+            $navBarSecond.classList.add('mp__nav-panel_second-'+this.buttonsCounter);
+
+            document.querySelector('.mp__button-'+this.buttonsCounter).addEventListener('click', e => {
+                e.target.classList.toggle('mp--on');
+                $navBarSecond.classList.toggle('mp--on');
+                this.$overlay.classList.toggle('mp--on');
+                // закрыть главную панель
+            }, true);
+
+            this.$overlay.addEventListener('click', () => {
+                $navBarSecond.classList.remove('mp--on');
+            }, true);
+        }
+
+        return document.getElementById('mp_button_'+this.buttonsCounter);
+    }
+
+    /**
+     * Add notification to button
+     * @param options
+     */
+    notification(options){
+        const $button = options.button.querySelector('.mp__notification');
+        if($button !== null){
+            $button.innerHTML = options.value;
         } else {
-            $.error( 'Метод с именем ' +  method + ' не существует' );
-        } 
-    };
-})(jQuery);
+            options.button.insertAdjacentHTML( 'afterbegin', '<div class="mp__notification">'+options.value+'</div>' );
+        }
+    }
+}

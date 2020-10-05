@@ -1,4 +1,4 @@
-# Библиотека для создания панели навигации в мобильной версии сайта
+# JS класс для создания панели навигации в мобильной версии сайта
 
 
 ![demo](https://raw.githubusercontent.com/AndreyMyagkov/mobilePanel/master/demo.gif "demo")
@@ -18,10 +18,12 @@
     <link href="mpanel/mpanel.css" rel="stylesheet" media="all">
     <script src="mpanel/mpanel.min.js"></script>
 ```
-### 2. Активация панели с гамбургером:
+### 2. Инициация панели с кнопкой-гамбургером, открывающей основное меню:
 
 ```javascript
-$.mobilePanel({'navbar':'.menu'});
+const mp = new MobilePanel({
+    'navbar': '.menu'
+});
 ```
 
 По умолчанию создается панель с одной кнопкой-гамбургером, привязанной к основному меню. Кнопка располагается справа.
@@ -35,7 +37,11 @@ $.mobilePanel({'navbar':'.menu'});
 Все последующие кнопки располагаются справа.
 
 ```javascript
-$.mobilePanel('button', {'text':'Каталог', 'navbar': '.aside-menu'});
+mp.button({
+    'text':'Каталог',
+    'navbar': '.aside-menu',
+    'center': false
+});
 ```
 
 Параметры:
@@ -43,24 +49,32 @@ $.mobilePanel('button', {'text':'Каталог', 'navbar': '.aside-menu'});
  ```text``` - текст кнопки  (можно использовать HTML)
  
   ```navbar``` - класс или id дополнительного меню на сайте
+  
+  ```center``` - {false} разместить кнопку по центру
+  
+  Возращает селектор кнопки
 
 ### 4. Добавляем кастомную кнопку
 
 ```javascript
-$.mobilePanel('button', {'text':'<a href=""><i class="fa fa-user-o" aria-hidden="true"></i> Войти</a>', 'center': true});
+ mp.button({
+        'text': '<i class="fa fa-user-o" aria-hidden="true"></i> Войти',
+        'navbar': '.aside-menu',
+        'center': true
+    });
 ```
-Параметры:
-
- ```text``` - текст кнопки (можно использовать HTML)
-
- ```center``` - разместить кнопку по центру
-
 
 ### 5. Вывести уведомление на кнопке
 
 ```javascript
-basket=$.mobilePanel('button', {'text':'Корзина'});
-$.mobilePanel('notification', {'button':basket, 'value': '5'});
+const basket = mp.button({
+    'text': 'Корзина'
+});
+
+mp.notification({
+    'button': basket,
+    'value': '5'
+});
 ```
 Параметры:
 

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Demo</title>
 </head>
 <body>
     <header class="header">
@@ -68,12 +68,36 @@
             &copy; Company
         </div>
     </footer>
-    <link href="demo/demo.css" rel="stylesheet" media="all">
+    <link href="demo.css" rel="stylesheet" media="all">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
-    <link href="mpanel/mpanel.css" rel="stylesheet" media="all">
-    <script src="mpanel/mpanel.js"></script>
-    <script src="demo/demo.js"></script>
+    <link href="../mpanel/mpanel.css" rel="stylesheet" media="all">
+    <script src="../mpanel/mpanel.js"></script>
+    <script>
+        // Init
+        const mp = new MobilePanel({
+            'navbar': '.menu'
+        });
+
+        // Add button
+        mp.button({'text':'Каталог', 'navbar': '.aside-menu'});
+
+        // Add custom button, position center
+        mp.button({
+            'text': '<i class="fa fa-user-o" aria-hidden="true"></i> Войти',
+            'navbar': '.aside-menu',
+            'center': true
+        });
+
+        // Add basket button
+        const basket = mp.button({
+            'text': 'Корзина'
+        });
+
+        mp.notification({
+            'button': basket,
+            'value': '5'
+        });
+    </script>
 </body>
 </html>
