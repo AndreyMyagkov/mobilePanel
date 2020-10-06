@@ -26,6 +26,7 @@ class MobilePanel {
 
             if (this.$navbar == null) {
                 throw new Error('Navbar not found');
+
             } else {
 
                 document.body.classList.add('mp--init');
@@ -55,7 +56,7 @@ class MobilePanel {
 
         } catch (e) {
             if (e.name === 'Error') {
-                console.error(e);
+                console.info(e);
             }
         }
 
@@ -83,6 +84,9 @@ class MobilePanel {
      * @return {HTMLElement}
      */
     button(options) {
+        if (!this.$navbar) {
+            return null;
+        }
         this.buttonsCounter++;
         const button= `<button id="mp_button_${this.buttonsCounter}" class="mp__button mp__button-text mp__button-${this.buttonsCounter} 
             ${(options.center?' mp__button-text--center':'')}">${options.text}</button>`;
@@ -117,6 +121,9 @@ class MobilePanel {
      * @param options
      */
     notification(options){
+        if (!this.$navbar) {
+            return null;
+        }
         const $button = options.button.querySelector('.mp__notification');
         if($button !== null){
             $button.innerHTML = options.value;
