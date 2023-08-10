@@ -40,7 +40,7 @@ class MobilePanel {
 
 
                 this.$mainButton.addEventListener('click', e => {
-                    e.target.classList.toggle('mp--on');
+                    this.$mainButton.classList.toggle('mp--on');
                     this.$navbar.classList.toggle('mp--on');
                     this.$overlay.classList.toggle('mp--on');
                 }, true);
@@ -49,7 +49,8 @@ class MobilePanel {
                 this.$overlay.addEventListener('click', e => {
                     e.target.classList.remove('mp--on');
                     // ? цикл?
-                    document.querySelector('.mp__button').classList.remove('mp--on');
+                    //document.querySelector('.mp__button').classList.remove('mp--on');
+                    this.$mainButton.classList.toggle('mp--on');
                     this.$navbar.classList.remove('mp--on');
                 }, true);
             }
@@ -88,20 +89,20 @@ class MobilePanel {
             return null;
         }
         this.buttonsCounter++;
-        const button= `<button id="mp_button_${this.buttonsCounter}" class="mp__button mp__button-text mp__button-${this.buttonsCounter} 
-            ${(options.center?' mp__button-text--center':'')}">${options.text}</button>`;
+        const button = `<button id="mp_button_${this.buttonsCounter}" class="mp__button mp__button-text mp__button-${this.buttonsCounter} 
+            ${(options.center ? ' mp__button-text--center' : '')}">${options.text}</button>`;
 
-        document.querySelector('.mp__wr').insertAdjacentHTML( 'afterbegin', button );
+        document.querySelector('.mp__wr').insertAdjacentHTML('afterbegin', button);
 
 
-        if(options.navbar && document.querySelector(options.navbar)){
+        if (options.navbar && document.querySelector(options.navbar)) {
             const $navBarSecond = document.querySelector(options.navbar);
 
             $navBarSecond.classList.add('mp__nav-panel');
             $navBarSecond.classList.add('mp__nav-panel_second');
-            $navBarSecond.classList.add('mp__nav-panel_second-'+this.buttonsCounter);
+            $navBarSecond.classList.add('mp__nav-panel_second-' + this.buttonsCounter);
 
-            document.querySelector('.mp__button-'+this.buttonsCounter).addEventListener('click', e => {
+            document.querySelector('.mp__button-' + this.buttonsCounter).addEventListener('click', e => {
                 e.target.classList.toggle('mp--on');
                 $navBarSecond.classList.toggle('mp--on');
                 this.$overlay.classList.toggle('mp--on');
@@ -113,22 +114,22 @@ class MobilePanel {
             }, true);
         }
 
-        return document.getElementById('mp_button_'+this.buttonsCounter);
+        return document.getElementById('mp_button_' + this.buttonsCounter);
     }
 
     /**
      * Add notification to button
      * @param options
      */
-    notification(options){
+    notification(options) {
         if (!this.$navbar) {
             return null;
         }
         const $button = options.button.querySelector('.mp__notification');
-        if($button !== null){
+        if ($button !== null) {
             $button.innerHTML = options.value;
         } else {
-            options.button.insertAdjacentHTML( 'afterbegin', '<div class="mp__notification">'+options.value+'</div>' );
+            options.button.insertAdjacentHTML('afterbegin', '<div class="mp__notification">' + options.value + '</div>');
         }
     }
 }
